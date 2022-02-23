@@ -1,0 +1,10 @@
+/* app global css */
+a{
+  text-decoration: none;
+}
+.brand-name {
+  font-size: 140%;
+}
+.appLogo {
+  width: 15%;
+}
