@@ -31,11 +31,15 @@ yarn format
 ```bash
 quasar build
 ```
+### UI DESIGN
+
+```bash
+https://www.figma.com/file/j6V4BAJOCOqdP24WDjVqew/NFT?node-id=0%3A1
+```
 
 ### Customize the configuration
 
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 
-### UI DESIGN
-https://www.figma.com/file/j6V4BAJOCOqdP24WDjVqew/NFT?node-id=0%3A1
+
