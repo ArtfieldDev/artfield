@@ -1,20 +1,73 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="q-pt-sm">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <div class="text-center">
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/img/avatar.png" /> </q-avatar
+          ><br />
+          <small>Kuloski</small>
+        </div>
+        <q-space />
+        <q-chip>
+          <q-input
+            rounded
+            v-model="search"
+            borderless
+            class="q-w-25"
+            style="max-width: 130px"
+            placeholder="Search Address"
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </q-chip>
       </q-toolbar>
+      <div class="flex flex-wrap justify-center text-center items-center">
+        <q-img width="40px" src="~assets/pilogo.png" />
+        <div class="text-secondary text-bold q-ma-sm text-left">
+          <span class="text-h6">
+            <span v-if="toggleAmount">305.9038311</span>
+            <span v-else-if="!toggleAmount">xxxxxxxxxxx</span>
+            <span class="text-white">
+              <q-icon
+                v-if="!toggleAmount"
+                @click="toggleAmountMtd"
+                name="mdi-eye-off"
+                style="margin: 0px 0px 0px 6px"
+              />
+              <q-icon
+                v-else-if="toggleAmount"
+                @click="toggleAmountMtd"
+                name="mdi-eye"
+                style="margin: 0px 0px 0px 6px"
+              />
+            </span> </span
+          ><br />
+          <span class="text-grey-4" v-if="toggleAmount">$30590.38311</span>
+          <span class="text-grey-4" v-else-if="!toggleAmount">xxxxxxxxxxx</span>
+        </div>
+      </div>
+      <div class="flex justify-around">
+        <q-btn
+          icon="mdi-arrow-bottom-left"
+          style="width: 35%"
+          class="q-px-lg q-my-sm text-capitalize"
+          outline
+          color="green"
+          ><span class="text-white">Receive</span></q-btn
+        >
+
+        <q-btn
+          icon="mdi-arrow-top-right"
+          style="width: 35%"
+          class="q-px-lg q-my-sm text-capitalize"
+          outline
+          color="red"
+          ><span class="text-white">send</span></q-btn
+        >
+      </div>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
@@ -30,8 +83,21 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-pull-to-refresh @refresh="refresh">
+        <router-view v-slot="{ Component }">
+          <transition
+            enter-active-class="animated slideIn"
+            leave-active-class="animated fadeOut"
+            appear
+            :duration="300"
+          >
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </q-pull-to-refresh>
     </q-page-container>
+
+    <main-footer />
   </q-layout>
 </template>
 
@@ -91,7 +157,16 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
-
+  data() {
+    return {
+      toggleAmount: false,
+    };
+  },
+  methods: {
+    toggleAmountMtd() {
+      this.toggleAmount = !this.toggleAmount;
+    },
+  },
   setup() {
     const leftDrawerOpen = ref(false);
 
@@ -101,7 +176,13 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
+       refresh (done) {
+        setTimeout(() => {
+          done()
+        }, 1000)
+      }
     };
   },
 });
 </script>
+

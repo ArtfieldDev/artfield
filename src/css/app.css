@@ -8,3 +8,12 @@ a{
 .appLogo {
   width: 15%;
 }
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-Regular.ttf') format('ttf');
+}
+
+body{
+  font-family: 'Poppins';
+}
